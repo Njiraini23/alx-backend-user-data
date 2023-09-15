@@ -44,8 +44,3 @@ def get_logger() -> logging.Logger:
 
     logger.addHandler(target_handler)
     return logger
-
-
-
-
-
