@@ -4,6 +4,10 @@ long message obfscated"""
 from typing import List
 import re
 import logging
+import os
+
+
+PII_FIELDS = ('name', 'email', 'password', 'ssn', 'phone')
 
 
 class RedactingFormatter(logging.Formatter):
@@ -24,6 +28,21 @@ class RedactingFormatter(logging.Formatter):
                             super().format(record), self.SEPARATOR)
 
 
+def get_logger() -> logging.Logger:
+    """Get_Logger function that returns a Logging.Logger object"""
+    logger = logging.getlogger("user_data")
+    logger.setLevel(logging.INFO)
+    logger.propagate = False
+
+    target_handler = logging.StreamHandler()
+    target_handler.setLevel(logging.INFO)
+
+    formatter = RedactingFormatter(PII_FIELDS)
+    target_handler.setFormatter(formatter)
+
+    logger.addHandler(target_handler)
+    return logger
+
 def filter_datum(fields: List[str], redaction: str, message: str,
                  separator: str) -> str:
     """returns the log message obfuscated"""
@@ -32,15 +51,3 @@ def filter_datum(fields: List[str], redaction: str, message: str,
                          f'{field}={redaction}{separator}', message)
     return message
 
-
-def get_logger() -> logging.Logger:
-    """Get_Logger function that returns a Logging.Logger object"""
-    logger = logging.getlogger("user_data")
-    logger.setLevel(logging.INFO)
-    logger.propagate = False
-
-    target_handler = logging.StreamHandler()
-    target_handler.setFormatter(formatter)
-
-    logger.addHandler(target_handler)
-    return logger
