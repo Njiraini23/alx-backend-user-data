@@ -31,3 +31,21 @@ def filter_datum(fields: List[str], redaction: str, message: str,
         message = re.sub(f'{field}=(.*?){separator}',
                          f'{field}={redaction}{separator}', message)
     return message
+
+
+def get_logger() -> logging.Logger:
+    """Get_Logger function that returns a Logging.Logger object"""
+    logger = logging.getlogger("user_data")
+    logger.setLevel(logging.INFO)
+    logger.propagate = False
+
+    target_handler = logging.StreamHandler()
+    target_handler.setFormatter(formatter)
+
+    logger.addHandler(target_handler)
+    return logger
+
+
+
+
+
