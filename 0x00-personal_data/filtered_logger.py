@@ -4,6 +4,7 @@ long message obfscated"""
 from typing import List
 import re
 import logging
+import mysql.connector
 import os
 
 
@@ -27,6 +28,18 @@ class RedactingFormatter(logging.Formatter):
         return filter_datum(self.fields, self.REDACTION,
                             super().format(record), self.SEPARATOR)
 
+    def get_db() -> mysql.connector.connection.MySQLConnection:
+        """The connection to mysql environment"""
+        user = os.getenv('PERSONAL_DATA_DB_USERNAME', 'root')
+        password = os.getenv('PERSONAL_DATA_DB_PASSWORD', '')
+        host = os.getenv('PERSONAL_DATA_DB_HOST', 'localhost')
+        database = os.getenv('PERSONAL_DATA_DB_NAME')
+        db_connect = mysql.connector.connect(user=user,
+                                             password=password,
+                                             host=host,
+                                             database=database)
+        return db_connect
+
 
 def get_logger() -> logging.Logger:
     """Get_Logger function that returns a Logging.Logger object"""
@@ -43,6 +56,7 @@ def get_logger() -> logging.Logger:
     logger.addHandler(target_handler)
     return logger
 
+
 def filter_datum(fields: List[str], redaction: str, message: str,
                  separator: str) -> str:
     """returns the log message obfuscated"""
@@ -50,4 +64,3 @@ def filter_datum(fields: List[str], redaction: str, message: str,
         message = re.sub(f'{field}=(.*?){separator}',
                          f'{field}={redaction}{separator}', message)
     return message
-
