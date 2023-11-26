@@ -50,14 +50,14 @@ def not_found(error) -> str:
 
 @app.errorhandler(403)
 def forbidden(error) -> str:
-    """Requesting unathorized handler"""
+    """Requesting unauthorized handler"""
     return jsonify({"error": "Forbidden"}), 403
 
 
 @app.errorhandler(401)
 def unauthorized(error) -> str:
     """Request unauthorized handler"""
-    return jsonify({"error": "unauthorized"}), 401
+    return jsonify({"error": "Unauthorized"}), 401
 
 
 if __name__ == "__main__":
