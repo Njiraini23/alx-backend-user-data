@@ -24,12 +24,12 @@ class Auth:
                     return False
             elif path == paths:
                 return False
-        
+
         return True
 
     def authorization_header(self, request=None) -> str:
         """
-        Placeholder that retrieves authorization header and returns 
+        Placeholder that retrieves authorization header and returns
         None
         """
         if request is None:
