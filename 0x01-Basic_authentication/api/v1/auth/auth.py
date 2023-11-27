@@ -44,4 +44,4 @@ class Auth:
         Placeholder method for getting the current user
         and returns none
         """
-        reurn None
+        return None
