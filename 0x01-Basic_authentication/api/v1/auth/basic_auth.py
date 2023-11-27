@@ -11,7 +11,7 @@ class BasicAuth(Auth):
     def extract_base64_authorization_header(
             self, authorization_header: str) -> str:
         """
-        Use the base 64 part of authorization for the 
+        Use the base 64 part of authorization for the
         basic authorization header
         """
         if authorization_header is None:
@@ -39,7 +39,7 @@ class BasicAuth(Auth):
     def extract_user_credentials(
             self, decoded_base64_authorization_header: str) -> (str, str):
         """
-        Extract and return the user email and password from 
+        Extract and return the user email and password from
         a decoded Base64 authorization header and returns
         a tuple with the email and password
         """
@@ -75,7 +75,7 @@ class BasicAuth(Auth):
             return None
 
         def current_user(self, request=None) -> TypeVar('User'):
-            """Retrieve theUser instance for a request 
+            """Retrieve theUser instance for a request
             on basic Authentication
             """
             if request is None:
@@ -92,6 +92,7 @@ class BasicAuth(Auth):
             user_email, user_pwd = self.extract_user_credentials(
                     decoded_credentials)
 
-            user_instance = self.user_object_from_credentials(user_email, user_pwd)
+            user_instance = self.user_object_from_credentials(
+                    user_email, user_pwd)
 
             return user_instance
