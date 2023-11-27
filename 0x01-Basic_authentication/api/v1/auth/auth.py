@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """Class to manage APIs"""
 from flask import request
 from typing import List, TypeVar
