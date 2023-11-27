@@ -44,7 +44,7 @@ class BasicAuth(Auth):
         a tuple with the email and password
         """
         if decoded_base64_authorization_header is None:
-            return (NOne, None)
+            return (None, None)
         if not isinstance(decoded_base64_authorization_header, str):
             return (None, None)
         if ':' not in decoded_base64_authorization_header:
