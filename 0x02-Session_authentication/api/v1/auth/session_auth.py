@@ -14,7 +14,7 @@ class SessionAuth(Auth):
         """
         Create a Session ID for a user_id
         :param user_ud: User ID (string) to associate with the session
-        :return: Session ID (string)
+        :return: Session ID which is a (string)
         """
         if user_id is None or not isinstance(user_id, str):
             return None
