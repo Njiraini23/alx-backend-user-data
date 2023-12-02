@@ -34,13 +34,13 @@ elif AUTH_TYPE == "session_db_auth":
 
 @app.before_request
 def before_request():
-    """Filters the request before it is handled by the routing"""
+    """Filter each request before it's handled by the proper route"""
     if auth is None:
         pass
     else:
         excluded_paths = [
-                '/api/v1/status/'
-                '/api/v1/unauthorized/'
+                '/api/v1/status/',
+                '/api/v1/unauthorized/',
                 '/api/v1/forbidden/',
                 '/api/v1/auth_session/login/'
         ]
@@ -64,13 +64,13 @@ def not_found(error) -> str:
 
 @app.errorhandler(403)
 def forbidden(error) -> str:
-    """Requesting unauthorized handler"""
+    """ Request unauthorized handler"""
     return jsonify({"error": "Forbidden"}), 403
 
 
 @app.errorhandler(401)
 def unauthorized(error) -> str:
-    """Request unauthorized handler"""
+    """ Request unauthorized handler"""
     return jsonify({"error": "Unauthorized"}), 401
 
 
