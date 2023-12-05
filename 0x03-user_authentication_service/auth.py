@@ -22,3 +22,34 @@ def _hash_password(password: str) -> bytes:
     in bytes"""
     passwd = password.encode('utf-8')
     return bcrypt.hashpw(passwd, bcrypt.gensalt())
+
+
+def _generate_uuid() -> str:
+    """Generate a uuid and return its string type
+    """
+    return str(uuid4())
+
+
+class Auth:
+    """Auth class to interact with the authentication database
+    """
+
+    def __init__(self):
+        self._db = DB()
+
+def register_user(email: str, password: str) -> User:
+    """The Auth function that takes email and password
+    Args:
+        email (str): the user's email
+        password (str): the user's password
+    Return:
+        creates new user if no user with a given email exists
+        or else raises the ValueError
+    """
+    try:
+        user = self._db.find_user_by(email=email)
+    except NoResultFound:
+        hashed = _hash_password(password)
+        usr = self._db.add_user(email, hashed)
+        return usr
+    raise ValueError(f"User {email} already exists")
