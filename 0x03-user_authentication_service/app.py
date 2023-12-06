@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-The Flask app
+Flask app
 """
 from flask import (
     Flask,
@@ -20,7 +20,7 @@ AUTH = Auth()
 @app.route("/", methods=["GET"], strict_slashes=False)
 def index() -> str:
     """
-    Returns the json response
+    Return json respomse
     {"message": "Bienvenue"}
     """
     return jsonify({"message": "Bienvenue"})
@@ -29,7 +29,7 @@ def index() -> str:
 @app.route("/users", methods=["POST"], strict_slashes=False)
 def users() -> str:
     """
-    Registering the new users
+    Register new users
     """
     email = request.form.get("email")
     password = request.form.get("password")
@@ -44,10 +44,10 @@ def users() -> str:
 @app.route("/sessions", methods=["POST"], strict_slashes=False)
 def login() -> str:
     """
-    Log in a user if the credentials provided are correct, and create
-    a new session for them.
+    Log in a user if the credentials provided are correct, and create a new
+    session for them.
     """
-    email = request.request.form.get("email")
+    email = request.form.get("email")
     password = request.form.get("password")
 
     if not AUTH.valid_login(email, password):
@@ -62,7 +62,7 @@ def login() -> str:
 @app.route("/sessions", methods=["DELETE"], strict_slashes=False)
 def logout():
     """
-    logging out a user and destroy their session
+    Log out a logged in user and destroy their session
     """
     session_id = request.cookies.get("session_id", None)
     user = AUTH.get_user_from_session_id(session_id)
@@ -75,7 +75,7 @@ def logout():
 @app.route("/profile", methods=["GET"], strict_slashes=False)
 def profile() -> str:
     """
-    returns the user's email from the session_id from the received cookies
+    Return a user's email based on session_id in the received cookies
     """
     session_id = request.cookies.get("session_id")
     user = AUTH.get_user_from_session_id(session_id)
@@ -87,7 +87,7 @@ def profile() -> str:
 @app.route("/reset_password", methods=["POST"], strict_slashes=False)
 def get_reset_password_token() -> str:
     """
-    Generates a token to reset the user's password
+    Generate a token for resetting a user's password
     """
     email = request.form.get("email")
     try:
@@ -101,7 +101,7 @@ def get_reset_password_token() -> str:
 @app.route("/reset_password", methods=["PUT"], strict_slashes=False)
 def update_password() -> str:
     """
-    Updating the user's password
+    Update a user's password
     """
     email = request.form.get("email")
     reset_token = request.form.get("reset_token")
