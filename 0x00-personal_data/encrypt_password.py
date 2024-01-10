@@ -1,24 +1,22 @@
 #!/usr/bin/env python3
-""" Hash_password function that expects one string"""
+"""
+Encrypting passwords
+"""
 import bcrypt
-from bcrypt import hashpw
 
 
 def hash_password(password: str) -> bytes:
-    "Using bcrypt to perfom hashing"
-    encode = password.encode()
-    salt = bcrypt.gensalt()
-    hashed = hashpw(encode, salt)
+    """ Returns a salted, hashed password, which is a byte string """
+    encoded = password.encode()
+    hashed = bcrypt.hashpw(encoded, bcrypt.gensalt())
+
     return hashed
 
 
 def is_valid(hashed_password: bytes, password: str) -> bool:
-    """
-    Compare whether password is same as hashed password
-    Args:
-        hashed_password (bytes): hashed passwrd
-        password (str): password in the string
-    returns:
-        a bool
-    """
-    return bcrypt.checkpw(password.encode(), hashed_password)
+    """ Validates the provided password matches the hashed password """
+    valid = False
+    encoded = password.encode()
+    if bcrypt.checkpw(encoded, hashed_password):
+        valid = True
+    return valid
